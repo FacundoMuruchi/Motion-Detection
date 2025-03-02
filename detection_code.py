@@ -5,7 +5,7 @@ import numpy as np
 
 # Video Configuration
 VIDEO_PATH = "sample_video_clip.mp4" # sample video
-OUTPUT_DIR = "output3" # output folder
+OUTPUT_DIR = "output" # output folder
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 OUTPUT_VIDEO_RAW = os.path.join(OUTPUT_DIR, "output_raw.mp4") # raw video
