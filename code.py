@@ -18,3 +18,8 @@ cap = cv2.VideoCapture(VIDEO_PATH) # reading video
 frame_rate = int(cap.get(cv2.CAP_PROP_FPS)) # original FPS
 frame_interval = max(1, frame_rate // FPS)
 frame_width, frame_height = RESIZE_DIM
+
+# Output Video Configuration
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out_raw = cv2.VideoWriter(OUTPUT_VIDEO_RAW, fourcc, FPS, (frame_width, frame_height))
+out_detected = cv2.VideoWriter(OUTPUT_VIDEO_DETECTED, fourcc, FPS, (frame_width, frame_height))
