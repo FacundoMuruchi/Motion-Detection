@@ -43,14 +43,14 @@ while True:
         # Motion Detection
         frame_diff = cv2.absdiff(prev_gray, gray)
         blurred = cv2.GaussianBlur(frame_diff, (5, 5), 0)
-        _, thresh = cv2.threshold(blurred, 20, 255, cv2.THRESH_BINARY)
+        _, thresh = cv2.threshold(blurred, 15, 255, cv2.THRESH_BINARY)
         
         # Bounding Boxes
         contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         frame_with_contours = frame_resized.copy()
         
         for contour in contours:
-            if cv2.contourArea(contour) > 5000:
+            if cv2.contourArea(contour) > 2000:
                 x, y, w, h = cv2.boundingRect(contour)
                 cv2.rectangle(frame_with_contours, (x, y), (x + w, y + h), (0, 255, 0), 2)
         
