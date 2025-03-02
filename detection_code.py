@@ -26,14 +26,15 @@ out_detected = cv2.VideoWriter(OUTPUT_VIDEO_DETECTED, fourcc, FPS, (frame_width,
 
 # Processing Video
 ret, prev_frame = cap.read()
-prev_frame = cv2.resize(prev_frame, RESIZE_DIM)
-prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
+prev_frame = cv2.resize(prev_frame, RESIZE_DIM) # resize frame
+prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY) # grey scale
 
 frame_count = 0
 
+# Detection Processing
 while True:
     ret, frame = cap.read()
-    if not ret:
+    if not ret: # if no more frames
         break
     
     if frame_count % frame_interval == 0:
@@ -41,9 +42,9 @@ while True:
         gray = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2GRAY)
         
         # Motion Detection
-        frame_diff = cv2.absdiff(prev_gray, gray)
-        blurred = cv2.GaussianBlur(frame_diff, (7, 7), 0)
-        _, thresh = cv2.threshold(blurred, 15, 255, cv2.THRESH_BINARY)
+        frame_diff = cv2.absdiff(prev_gray, gray) # difference
+        blurred = cv2.GaussianBlur(frame_diff, (7, 7), 0) # blur
+        _, thresh = cv2.threshold(blurred, 15, 255, cv2.THRESH_BINARY) # detecion treshold
         thresh = cv2.dilate(thresh, None, iterations=3)  # join near areas
         
         # Bounding Boxes
@@ -51,7 +52,7 @@ while True:
         frame_with_contours = frame_resized.copy()
         
         for contour in contours:
-            if cv2.contourArea(contour) > 1200:
+            if cv2.contourArea(contour) > 1200: # filtering small objects
                 x, y, w, h = cv2.boundingRect(contour)
                 cv2.rectangle(frame_with_contours, (x, y), (x + w, y + h), (0, 255, 0), 2)
         
